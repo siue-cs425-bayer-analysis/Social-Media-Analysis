@@ -18,11 +18,12 @@ def parsePost(post):
     return content
 
 def getPosts(keyword, subreddit, opt_startDate, opt_endDate):
-    query = "https://www.reddit.com/r/" + subreddit + "/search/" + keyword
+    query = "https://www.reddit.com/search.json?q=" + keyword
     searchResponse = requests.get(query)
     #Identify list of posts
     list_of_posts = []
-    return searchResponse.parseJSON(list_of_posts)
+    print(str(searchResponse))
+    return searchResponse.json()
 
 def main():
     subreddit = input("Input subreddit to search: ")
