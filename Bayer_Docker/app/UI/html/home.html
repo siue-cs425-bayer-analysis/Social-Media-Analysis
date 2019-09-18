@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html>
+
+<style>
+   .btn1 {
+    background-color: lightblue; 
+    border: 1px solid white; 
+    color: black; 
+    padding: 10px 24px; 
+    cursor: pointer; 
+    float: right;
+    font-size: 16px;
+    margin-top: 12px; 
+  }
+
+    .btn2 {
+    background-color: lightblue; 
+    border: 1px solid white; 
+    color: black; 
+    padding: 10px 24px; 
+    cursor: pointer; 
+    float: right;
+    font-size: 16px;
+    margin-top: 12px; 
+  }
+
+  .btn1:after, .bnt2:after {
+    content: "";
+    clear: both;
+    display: table;        
+  }
+  
+  .btn1 :not(:last-child), .btn2 :not(:last-child) {
+    border-right: none; 
+  }
+
+  .active, .btn1:hover, .btn2:hover {
+    background-color: rgb(32, 103, 218);
+    color:white;
+  } 
+
+  .dropbtn1, .dropbtn2 {
+  background-color: green;
+  color: white;
+  margin-left: 300px;
+  margin-top: 12px; 
+  padding-left: 150px;
+  padding-right: 150px; 
+  padding-top: 10px; 
+  padding-bottom: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  
+}
+
+.dropbtn1:hover, .dropbtn1:focus, .dropbtn2:hover, .dropbtn2:focus {
+  background-color: darkgreen;
+  
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+   
+ 
+}
+
+.dropdown-content1, .dropdown-content2 {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  margin-left: 300px;
+}
+
+.dropdown-content1 a, .dropdown-content2 a {
+  color: black;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 300px;
+  text-decoration: none;
+  display: block;
+}
+
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {
+    display: block;
+}
+
+#mySearch {
+  width: 80%;
+  float: left;
+  padding: 10px; 
+  margin-left: 150px;
+  font-size: 16px;
+  border: 1px solid green;
+}
+
+.bg {
+
+  background-image: url("bayer.jpg");
+    height: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding-top:400px;
+    margin-bottom: 20px;
+  
+}
+
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: rgb(32, 103, 218);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  vertical-align: center;
+  margin-left: 770px; 
+  margin-top: 15px;
+}
+
+.button:hover {background-color: lightblue}
+
+.button:active {
+  background-color: rgb(72, 142, 207);
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.selected{
+    color: darkgray;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 15px;
+ 
+}
+table{
+    margin-top: 25px;
+    margin-left: 20px;
+    margin-right: 20px; 
+    margin-bottom: 30px; 
+}
+
+</style>
+
+
+
+    <head>
+        <title>Home</title>
+     
+    </head>
+    <body id = "page-index">
+       
+        <main>
+            <div class="bg">
+                
+            </div>
+
+
+        <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
+
+        <div id="btn-group1" style = "width: 90%">
+          <button class = "btn1 active" style = "width:45%">Twitter</button>
+          <button class = "btn1" style = "width:45%">Reddit</button>
+        </div>
+
+        <div id="btn-group2" style = "width: 90%">
+            <button class = "btn2 active" style = "width:45%">Sentament</button>
+            <button class = "btn2" style = "width:45%">Technologies</button>
+          </div>
+
+          <div class="dropdown">
+                <button onclick="myFunction1()" class="dropbtn1">Time Frame</button>
+                <div id="myDropdown1" class="dropdown-content1">
+                  <a href="#week active" >1 Week</a>
+                  <a href="#one">1 Month</a>
+                  <a href="#four">4 Months</a>
+                  <a href="#eight">8 Months</a>
+                  <a href="#twelve">12 Months</a>
+                </div>
+              </div>
+
+              <div class="dropdown">
+                    <button onclick="myFunction2()" class="dropbtn2">Location</button>
+                    <div id="myDropdown2" class="dropdown-content2">
+                      <a href="#c">Central</a>
+                      <a href="#ec">EastCoast</a>
+                      <a href="#n">Northern</a>
+                      <a href="#s">Southern</a>
+                      <a href="#sw">SouthWestern</a>
+                      <a href="#wc">WestCoast</a>
+                    </div>
+                  </div>
+            <div>
+                    <button class="button">Search</button>
+            </div>
+            
+            <div>
+            <table style="width:100%">
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                     <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                     <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                     <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                     <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                     <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                     <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                     <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </table>
+                </div>
+        
+           
+        </main>
+    </body>
+
+    <script>
+          
+            function myFunction1() {
+              document.getElementById("myDropdown1").classList.toggle("show");
+            }
+            
+       
+            
+
+            function myFunction2() {
+              document.getElementById("myDropdown2").classList.toggle("show");
+            }
+            
+            window.onclick = function(event) {
+              if (!event.target.matches('.dropbtn2')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content2");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                  var openDropdown = dropdowns[i];
+                  if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show'); 
+                  }
+                }
+              }
+            }
+
+            var header = document.getElementById("btn-group1");
+            var btns = header.getElementsByClassName("btn1");
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].addEventListener("click", function() {
+                    var current = document.getElementsByClassName("active");
+                    current[0].className = current[0].className.replace(" active", "");
+                    this.className += " active";
+                });
+            }
+
+            var header1 = document.getElementById("btn-group2");
+            var btns1 = header1.getElementsByClassName("btn2");
+            for (var j = 0; j < btns1.length; j++) {
+                btns1[j].addEventListener("click", function() {
+                    var current1 = document.getElementsByClassName("active");
+                    current1[0].className = current1[0].className.replace(" active", "");
+                    this.className += " active";
+                });
+            }
+        </script>
+</html>
