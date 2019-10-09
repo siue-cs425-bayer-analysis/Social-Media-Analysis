@@ -8,7 +8,11 @@
 #
 #
 
+from django .urls import path
+from Home.views import homeView 
 
-from django.contrib import admin
-
-# Register your models here.
+urlpatterns = [
+    path('',homeView, name='Home'),
+    path('homeView', homeView, name='Home'),
+]
+   

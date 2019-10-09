@@ -6,13 +6,9 @@
 #           "city name coordinates" i.e. Saint Louis coordinates.
 #     
 #       Radius is set to 100 miles from the coordinate point.
-#   NOTE: When updating locations need to update LOCATIONS to reflected change      
-#
-#   All rights reserved.
-
+#   
 # locations
 # city = [longitude, latitude, "radius"]
-
 
 
 LOCATIONS = {"Chicago": ("41.8781", "-87.6298", "100mi"),

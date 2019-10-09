@@ -8,12 +8,11 @@
 #
 #
 
-
 from django .urls import path
-
-from Twitter.views import twitterSearchResultsView
+from Home.views import homeView 
 
 urlpatterns = [
-    path('', twitterSearchResultsView, name='Sarch Results'),
+    path('',homeView, name='Home'),
+    path('Home:homeView', homeView, name='Home'),
 ]
-        
+   

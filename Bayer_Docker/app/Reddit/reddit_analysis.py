@@ -7,41 +7,34 @@
 import requests
 import vaderSentiment
 import json
-import praw
-import statistics
 
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+def getAffinityValue(text):
+    return vaderSentiment.vaderSentiment.SentimentIntensityAnalyzer.polar_scores(text)
 
-def getAffinityValue(analyzer, text):
-    return analyzer.polarity_scores(text)
+def parsePost(post):
+    content = []
+    for comment in post[1][data][children]:
+        content.push(comment[data][body])
+    return content
 
-def getPosts(reddit, keyword, subreddit_name, opt_startDate, opt_endDate):
-    #query = "https://www.reddit.com/search.json?q=" + keyword
-    #searchResponse = requests.get(query)
+def getPosts(keyword, subreddit, opt_startDate, opt_endDate):
+    query = "https://www.reddit.com/search.json?q=" + keyword
+    searchResponse = requests.get(query)
     #Identify list of posts
-    list_of_posts = reddit.subreddit(subreddit_name).search(keyword)
-    #print(str(list_of_posts))
-    return list_of_posts
+    list_of_posts = []
+    print(str(searchResponse))
+    return searchResponse.json()
 
 def main():
-    reddit = praw.Reddit('sentimentbot', user_agent='Python Sentiment Analyzer')
     subreddit = input("Input subreddit to search: ")
     search = input("Input search term: ")
-    analyzer = SentimentIntensityAnalyzer()
-    posts = getPosts(reddit, search, subreddit, 0, 0)
+    posts = getPosts(search, subreddit, 0, 0)
     values = []
-    for post in posts:
-        print(post.title)
-        #print("Total analyzed comments: " + str(len(values)))
-        post.comments.replace_more(limit=0)
-        for comment in post.comments.list():
-            print("     " + comment.body)
-            print(str(getAffinityValue(analyzer, comment.body)))
-            values.append(getAffinityValue(analyzer, comment.body)['compound'])
-        #comments = parsePost(post)
-        #for comment in comments[:15]:
-        #    values.push(getAffinityValue(comment))
-    print("Average Affinity of topic is: " + str(statistics.mean(values)))
+    for post in posts[:5]:
+        comments = parsePost(post)
+        for comment in comments[:15]:
+            values.push(getAffinityValue(comment))
+    print("Average Affinity of post is: " + str(values))
 
 def prog_main(subreddit, search):
     posts = getPosts(search, subreddit, 0, 0)
