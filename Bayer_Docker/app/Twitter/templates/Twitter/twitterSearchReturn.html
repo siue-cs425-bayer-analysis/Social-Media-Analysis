@@ -1,0 +1,48 @@
+
+<form action="{% url 'search' %}" method='get'>   
+    {% csrf_token %}
+    {{ form }}
+    <input type='submit' value='Search'>
+</form>
+
+
+{% if searchResults %}
+    <table>
+        <tr>
+            <th> Most Positive Tweets </th>
+        </tr>
+        {% for tweets in posTweets %}
+        <tr>
+            <td>{{ tweets.Tweet.fullText }} </td>
+            <td>{{ tweets.Tweet.sentiment }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <table>
+        <tr>
+            <th> Most Negative Tweets </th>
+        </tr>
+        {% for tweets in negTweets %}
+        <tr>
+            <td>{{ tweets.Tweet.fullText }} </td>
+            <td>{{ tweets.Tweet.sentiment }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    
+    <table>
+        <tr>
+            <th> Most Common Tweets </th>
+        </tr>
+        {% for tweets in common %}
+        <tr>
+            <td>{{ tweets.Tweet.fullText }} </td>
+            <td>{{ tweets.Tweet.sentiment }} </td>
+            <td>{{ tweets.count }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+{% endif %}    
