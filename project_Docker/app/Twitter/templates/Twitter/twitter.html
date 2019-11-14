@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Twitter - Bayer Sentiment Analyzer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {
+      height: 550px
+    }
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* On small screens, set height to 'auto' for the grid */
+    @media screen and (max-width: 767px) {
+      .row.content {
+        height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-inverse visible-xs">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Sentiment Analyzer</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Dashboard</a></li>
+          <li class="active"><a href="#">Twitter</a></li>
+          <li><a href="/Reddit/">Reddit</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row content">
+      <div class="col-sm-3 sidenav hidden-xs">
+        <h2>Sentiment Analyzer</h2>
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="/">Dashboard</a></li>
+          <li class="active"><a href="#">Twitter</a></li>
+          <li><a href="/Reddit/">Reddit</a></li>
+        </ul><br>
+      </div>
+      <br>
+
+      <div class="col-sm-9">
+        <div class="well">
+          <h4>Dashboard</h4>
+          <form action="{% url 'search' %}" method='get'>
+            {% csrf_token %}
+            {{ form }}
+            <input type='submit' value='Search'>
+          </form>
+
+
+          {% if searchResults.searchError%}
+          <h3>Rate Limit exceeded</h3>
+          {% endif %}
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="well">
+              <h4>Search Term</h4>
+              <p>{{searchMeta.searchterm}}</p>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="well">
+              <h4>Tweets Requested</h4>
+              <p>{{searchMeta.tweetsToget}}</p>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="well">
+              <h4>Tweets Returned</h4>
+              <p>{{searchMeta.returnCount}}</p>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="well">
+              <h4>Avg. Sentiment</h4>
+              <p>{{searchMeta.avgSentiment.sentiment__avg}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well">
+            <h4>Positive Tweets</h4>
+            <p>{{searchMeta.numPosTweet}}</p>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="well">
+            <h4>Negative Tweets</h4>
+            <p>{{searchMeta.numNegTweet}}</p>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="well">
+            <h4>Neutral Tweets</h4>
+            <p>{{searchMeta.numNeuTweet}}</p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well">
+            <h4>Unique Tweets</h4>
+            <p>{{searchMeta.uniqueTweet}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="well">
+              {% if posTweets %}
+              <table class='twitterSearchResults' name='positiveTweets'>
+                <tr>
+                  <th>Most Positive Tweets</th>
+                  <th>Count</th>
+                  <th>Sentiment</th>
+
+                </tr>
+                {% for tweets in posTweets %}
+                <tr>
+                  <td>{{ tweets.fullText }} </td>
+                  <td>{{ tweets.tweetCount }} </td>
+                  <td>{{ tweets.sentiment }} </td>
+                </tr>
+                {% endfor %}
+              </table>
+
+              {% endif %}
+
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="well">
+              {% if negTweets %}
+              <table class='twitterSearchResults' name='negativeTweets'>
+                <tr>
+
+                  <th>Most Negative Tweets</th>
+                  <th>Count</th>
+                  <th>Sentiment</th>
+
+                </tr>
+                {% for tweets in negTweets %}
+                <tr>
+                  <td>{{ tweets.fullText }} </td>
+                  <td>{{ tweets.tweetCount }} </td>
+                  <td>{{ tweets.sentiment }} </td>
+                </tr>
+                {% endfor %}
+              </table>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="well">
+              {% if common %}
+              <table class='twitterSearchResults' name='commonTweets'>
+                <tr>
+                  <th>Most Common Tweets</th>
+                  <th>Count</th>
+                  <th>Sentiment</th>
+                </tr>
+                {% for tweets in common %}
+                <tr>
+                  <td>{{ tweets.fullText }} </td>
+                  <td>{{ tweets.tweetCount }} </td>
+                  <td>{{ tweets.sentiment }} </td>
+                </tr>
+                {% endfor %}
+              </table>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="well">
+              {% if wordList %}
+              <table>
+                <tr>
+                  <th> Word List </th>
+                </tr>
+                {% for a in wordList %}
+                {% cycle '<tr>' '' '' '' '' '' '' %}
+                <td>{{ a.word }}</td>
+                <td> {{ a.count }} </td>
+                <td>&nbsp</td>
+                {% cycle  '' '' '' '' '' '' '<tr>'%}
+                {% endfor %}
+              </table>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+</body>
+
+</html>
